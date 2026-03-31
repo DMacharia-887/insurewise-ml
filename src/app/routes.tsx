@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import DashboardPage from "./pages/DashboardPage";
 import BorrowerProfilePage from "./pages/BorrowerProfilePage";
+import DriverManagement from './pages/DriverManagement';
 import RiskAssessmentPage from "./pages/RiskAssessmentPage";
 import TripHistoryPage from "./pages/TripHistoryPage";
 import AdminPanelPage from "./pages/AdminPanelPage";
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "borrower/:id",
         Component: BorrowerProfilePage,
+      },
+      {
+	path: "driver-management",
+	Component: DriverManagement,
       },
       {
         path: "*",

@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router";
 import { 
   LayoutDashboard, 
-  Users, 
+  Users,
+  UserPlus, 
   ShieldCheck, 
   Settings, 
   LogOut, 
@@ -28,7 +29,7 @@ export function Sidebar() {
 
   const adminLinks = [
     { href: "/", icon: LayoutDashboard, label: "Dashboard" },
-    { href: "/borrower/1", icon: Users, label: "Borrower Profile" },
+    { href: "/driver-management", icon: UserPlus, label: "Driver Management" },
     { href: "/risk-assessment", icon: ShieldCheck, label: "Risk Assessment" },
     { href: "/trip-history", icon: Navigation, label: "Trip History" },
     { href: "/admin-panel", icon: Sliders, label: "Admin Panel" },
