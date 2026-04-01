@@ -19,4 +19,16 @@ export default defineConfig({
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
+
+  // NEW: Add the local development proxy for Traccar API
+  server: {
+    proxy: {
+      '/traccar-api': {
+        target: 'https://fleet.aptic.co.ke/api',
+        changeOrigin: true,
+        secure: false, // Prevents SSL cert errors during local proxying
+        rewrite: (path) => path.replace(/^\/traccar-api/, '')
+      }
+    }
+  }
 })

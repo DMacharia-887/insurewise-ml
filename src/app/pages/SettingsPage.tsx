@@ -9,8 +9,14 @@ import {
   ChevronRight,
   LogOut
 } from "lucide-react";
+import { supabase } from "../../utils/supabase";
+import { useNavigate } from "react-router";
+import { useState } from "react";
 
 export default function SettingsPage() {
+  const navigate = useNavigate();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
   const sections = [
     {
       title: "Account Settings",
@@ -39,6 +45,23 @@ export default function SettingsPage() {
       ]
     }
   ];
+
+  // Supabase secure sign out function
+  const handleSignOut = async () => {
+    try {
+      setIsLoggingOut(true);
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) throw error;
+      
+      // Redirect to login page after successful logout
+      navigate('/login');
+    } catch (error: any) {
+      console.error("Error signing out:", error.message);
+      alert("Failed to sign out. Please try again.");
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -76,9 +99,13 @@ export default function SettingsPage() {
         ))}
 
         <div className="pt-4 border-t border-slate-200">
-           <button className="flex items-center gap-3 px-8 py-4 bg-red-50 text-red-600 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-red-100 transition-all">
-              <LogOut size={18} />
-              Sign Out from All Devices
+           <button 
+             onClick={handleSignOut}
+             disabled={isLoggingOut}
+             className="flex items-center gap-3 px-8 py-4 bg-red-50 text-red-600 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-red-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+           >
+              <LogOut size={18} className={isLoggingOut ? "animate-pulse" : ""} />
+              {isLoggingOut ? "Signing Out..." : "Sign Out from All Devices"}
            </button>
         </div>
       </div>
